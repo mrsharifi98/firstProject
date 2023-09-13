@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="onlineshopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="categoryTbl">
+    <Key>
+      <PropertyRef Name="pkID" />
+    </Key>
+    <Property Name="pkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ProductsTbls" Relationship="Self.FK_ProductsTbl_categoryTbl" FromRole="categoryTbl" ToRole="ProductsTbl" />
+  </EntityType>
+  <EntityType Name="ProductsTbl">
+    <Key>
+      <PropertyRef Name="pkID" />
+    </Key>
+    <Property Name="pkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="img" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="price" Type="Int32" Nullable="false" />
+    <Property Name="fkCategory" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="categoryTbl" Relationship="Self.FK_ProductsTbl_categoryTbl" FromRole="ProductsTbl" ToRole="categoryTbl" />
+    <NavigationProperty Name="invoiceTbls" Relationship="onlineshopModel.FK_invoiceTbl_ProductsTbl" FromRole="ProductsTbl" ToRole="invoiceTbl" />
+  </EntityType>
+  <Association Name="FK_ProductsTbl_categoryTbl">
+    <End Role="categoryTbl" Type="Self.categoryTbl" Multiplicity="1" />
+    <End Role="ProductsTbl" Type="Self.ProductsTbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categoryTbl">
+        <PropertyRef Name="pkID" />
+      </Principal>
+      <Dependent Role="ProductsTbl">
+        <PropertyRef Name="fkCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="onlineShop" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="categoryTbls" EntityType="Self.categoryTbl" />
+    <EntitySet Name="ProductsTbls" EntityType="Self.ProductsTbl" />
+    <AssociationSet Name="FK_ProductsTbl_categoryTbl" Association="Self.FK_ProductsTbl_categoryTbl">
+      <End Role="categoryTbl" EntitySet="categoryTbls" />
+      <End Role="ProductsTbl" EntitySet="ProductsTbls" />
+    </AssociationSet>
+    <EntitySet Name="CostumersTbls" EntityType="onlineshopModel.CostumersTbl" />
+    <EntitySet Name="invoiceTbls" EntityType="onlineshopModel.invoiceTbl" />
+    <EntitySet Name="invoiceViews" EntityType="onlineshopModel.invoiceView" />
+    <AssociationSet Name="FK_invoiceTbl_CostumersTbl" Association="onlineshopModel.FK_invoiceTbl_CostumersTbl">
+      <End Role="CostumersTbl" EntitySet="CostumersTbls" />
+      <End Role="invoiceTbl" EntitySet="invoiceTbls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_invoiceTbl_ProductsTbl" Association="onlineshopModel.FK_invoiceTbl_ProductsTbl">
+      <End Role="ProductsTbl" EntitySet="ProductsTbls" />
+      <End Role="invoiceTbl" EntitySet="invoiceTbls" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CostumersTbl">
+    <Key>
+      <PropertyRef Name="pkID" />
+    </Key>
+    <Property Name="pkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Family" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="11" FixedLength="true" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="fkStatus" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="invoiceTbls" Relationship="onlineshopModel.FK_invoiceTbl_CostumersTbl" FromRole="CostumersTbl" ToRole="invoiceTbl" />
+  </EntityType>
+  <EntityType Name="invoiceTbl">
+    <Key>
+      <PropertyRef Name="pkID" />
+    </Key>
+    <Property Name="pkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="factorNumber" Type="Int32" Nullable="false" />
+    <Property Name="fkProduct" Type="Int32" Nullable="false" />
+    <Property Name="fkCostumer" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="Boolean" Nullable="false" />
+    <Property Name="transID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="trackingID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="cardNumber" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CostumersTbl" Relationship="onlineshopModel.FK_invoiceTbl_CostumersTbl" FromRole="invoiceTbl" ToRole="CostumersTbl" />
+    <NavigationProperty Name="ProductsTbl" Relationship="onlineshopModel.FK_invoiceTbl_ProductsTbl" FromRole="invoiceTbl" ToRole="ProductsTbl" />
+  </EntityType>
+  <EntityType Name="invoiceView">
+    <Key>
+      <PropertyRef Name="name" />
+      <PropertyRef Name="img" />
+      <PropertyRef Name="price" />
+      <PropertyRef Name="pkID" />
+      <PropertyRef Name="factorNumber" />
+      <PropertyRef Name="fkProduct" />
+      <PropertyRef Name="fkCostumer" />
+      <PropertyRef Name="status" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="img" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="price" Type="Int32" Nullable="false" />
+    <Property Name="pkID" Type="Int32" Nullable="false" />
+    <Property Name="factorNumber" Type="Int32" Nullable="false" />
+    <Property Name="fkProduct" Type="Int32" Nullable="false" />
+    <Property Name="fkCostumer" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="Boolean" Nullable="false" />
+    <Property Name="transID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="trackingID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="cardNumber" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_invoiceTbl_CostumersTbl">
+    <End Type="onlineshopModel.CostumersTbl" Role="CostumersTbl" Multiplicity="1" />
+    <End Type="onlineshopModel.invoiceTbl" Role="invoiceTbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CostumersTbl">
+        <PropertyRef Name="pkID" />
+      </Principal>
+      <Dependent Role="invoiceTbl">
+        <PropertyRef Name="fkCostumer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_invoiceTbl_ProductsTbl">
+    <End Type="onlineshopModel.ProductsTbl" Role="ProductsTbl" Multiplicity="1" />
+    <End Type="onlineshopModel.invoiceTbl" Role="invoiceTbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductsTbl">
+        <PropertyRef Name="pkID" />
+      </Principal>
+      <Dependent Role="invoiceTbl">
+        <PropertyRef Name="fkProduct" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

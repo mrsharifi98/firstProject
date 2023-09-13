@@ -1,0 +1,92 @@
+﻿
+@{
+
+    if (Request.Cookies["userID"] != null)
+    {
+        if (Request.Cookies["userID"].Value != null)
+        {
+            Response.Redirect("~/home/checkOut");
+
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>login</title>
+    <link rel="stylesheet" href="~/assets/css/login.css" />
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+</head>
+<body>
+     @Html.AntiForgeryToken();
+
+    <br>
+    <br>
+    <div class="cont">
+        <div class="form sign-in">
+            <h2>Welcome</h2>
+            <label>
+                <span>Phone Number</span>
+                <input type="tel" id="loginUsername" />
+            </label>
+            <label class="password-input">
+                <span>Password</span>
+                <input type="password" id="loginPass" />
+            </label>
+            <p class="forgot-pass">Forgot password?</p>
+            <button type="button" class="submit" id="signIn">Sign In</button>
+        </div>
+        <div class="sub-cont">
+            <div class="img">
+                <div class="img__text m--up">
+
+                    <h3>Don't have an account? Please Sign up!<h3>
+                </div>
+                <div class="img__text m--in">
+
+                    <h3>If you already has an account, just sign in.<h3>
+                </div>
+                <div class="img__btn">
+                    <span class="m--up">Sign Up</span>
+                    <span class="m--in">Sign In</span>
+                </div>
+            </div>
+            <div class="form sign-up">
+                <h2>Create your Account</h2>
+                <label>
+                    <span id="nameOrCode">Name</span>
+                    <input type="text" id="nameSignUp" />
+                    <div id="nameSignUpValid" class="validate"></div>
+                </label>
+                <label class="S2H">
+                    <span>Family</span>
+                    <input type="text" id="familySignUp" />
+                    <div id="familySignUpValid" class="validate"></div>
+                </label>
+                <label class="S2H">
+                    <span>Phone number</span>
+                    <input type="number" id="usernameSignUp" autocomplete="off" />
+                    <div id="phoneSignUpValid" class="validate"></div>
+                </label>
+                <label class="S2H">
+                    <span>Password</span>
+                    <input type="password" id="passSignUp" />
+                    <div id="passSignUpValid" class="validate"></div>
+                </label>
+
+                <button type="button" class="submit" id="signUp">Sign Up</button>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/assets/js/loginjs.js"></script>
+
+
+
+</body>
+</html>

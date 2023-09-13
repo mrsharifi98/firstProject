@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="onlineshopModelStoreContainer" CdmEntityContainer="onlineShop">
+    <EntitySetMapping Name="categoryTbls">
+      <EntityTypeMapping TypeName="onlineshopModel.categoryTbl">
+        <MappingFragment StoreEntitySet="categoryTbl">
+          <ScalarProperty Name="pkID" ColumnName="pkID" />
+          <ScalarProperty Name="category" ColumnName="category" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductsTbls">
+      <EntityTypeMapping TypeName="onlineshopModel.ProductsTbl">
+        <MappingFragment StoreEntitySet="ProductsTbl">
+          <ScalarProperty Name="pkID" ColumnName="pkID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="img" ColumnName="img" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="fkCategory" ColumnName="fkCategory" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CostumersTbls">
+      <EntityTypeMapping TypeName="onlineshopModel.CostumersTbl">
+        <MappingFragment StoreEntitySet="CostumersTbl">
+          <ScalarProperty Name="fkStatus" ColumnName="fkStatus" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Family" ColumnName="Family" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="pkID" ColumnName="pkID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="invoiceTbls">
+      <EntityTypeMapping TypeName="onlineshopModel.invoiceTbl">
+        <MappingFragment StoreEntitySet="invoiceTbl">
+          <ScalarProperty Name="cardNumber" ColumnName="cardNumber" />
+          <ScalarProperty Name="trackingID" ColumnName="trackingID" />
+          <ScalarProperty Name="transID" ColumnName="transID" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="fkCostumer" ColumnName="fkCostumer" />
+          <ScalarProperty Name="fkProduct" ColumnName="fkProduct" />
+          <ScalarProperty Name="factorNumber" ColumnName="factorNumber" />
+          <ScalarProperty Name="pkID" ColumnName="pkID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="invoiceViews">
+      <EntityTypeMapping TypeName="onlineshopModel.invoiceView">
+        <MappingFragment StoreEntitySet="invoiceView">
+          <ScalarProperty Name="cardNumber" ColumnName="cardNumber" />
+          <ScalarProperty Name="trackingID" ColumnName="trackingID" />
+          <ScalarProperty Name="transID" ColumnName="transID" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="fkCostumer" ColumnName="fkCostumer" />
+          <ScalarProperty Name="fkProduct" ColumnName="fkProduct" />
+          <ScalarProperty Name="factorNumber" ColumnName="factorNumber" />
+          <ScalarProperty Name="pkID" ColumnName="pkID" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="img" ColumnName="img" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="onlineshopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="categoryTbl">
+    <Key>
+      <PropertyRef Name="pkID" />
+    </Key>
+    <Property Name="pkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="category" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CostumersTbl">
+    <Key>
+      <PropertyRef Name="pkID" />
+    </Key>
+    <Property Name="pkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Family" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Phone" Type="char" MaxLength="11" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="fkStatus" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="invoiceTbl">
+    <Key>
+      <PropertyRef Name="pkID" />
+    </Key>
+    <Property Name="pkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="factorNumber" Type="int" Nullable="false" />
+    <Property Name="fkProduct" Type="int" Nullable="false" />
+    <Property Name="fkCostumer" Type="int" Nullable="false" />
+    <Property Name="status" Type="bit" Nullable="false" />
+    <Property Name="transID" Type="nvarchar" MaxLength="50" />
+    <Property Name="trackingID" Type="nvarchar" MaxLength="50" />
+    <Property Name="cardNumber" Type="nvarchar" MaxLength="16" />
+  </EntityType>
+  <EntityType Name="ProductsTbl">
+    <Key>
+      <PropertyRef Name="pkID" />
+    </Key>
+    <Property Name="pkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="img" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="price" Type="int" Nullable="false" />
+    <Property Name="fkCategory" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view '9752_onlineshop.dbo.invoiceView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="invoiceView">
+    <Key>
+      <PropertyRef Name="name" />
+      <PropertyRef Name="img" />
+      <PropertyRef Name="price" />
+      <PropertyRef Name="pkID" />
+      <PropertyRef Name="factorNumber" />
+      <PropertyRef Name="fkProduct" />
+      <PropertyRef Name="fkCostumer" />
+      <PropertyRef Name="status" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="img" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="price" Type="int" Nullable="false" />
+    <Property Name="pkID" Type="int" Nullable="false" />
+    <Property Name="factorNumber" Type="int" Nullable="false" />
+    <Property Name="fkProduct" Type="int" Nullable="false" />
+    <Property Name="fkCostumer" Type="int" Nullable="false" />
+    <Property Name="status" Type="bit" Nullable="false" />
+    <Property Name="transID" Type="nvarchar" MaxLength="50" />
+    <Property Name="trackingID" Type="nvarchar" MaxLength="50" />
+    <Property Name="cardNumber" Type="nvarchar" MaxLength="16" />
+  </EntityType>
+  <Association Name="FK_invoiceTbl_CostumersTbl">
+    <End Role="CostumersTbl" Type="Self.CostumersTbl" Multiplicity="1" />
+    <End Role="invoiceTbl" Type="Self.invoiceTbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CostumersTbl">
+        <PropertyRef Name="pkID" />
+      </Principal>
+      <Dependent Role="invoiceTbl">
+        <PropertyRef Name="fkCostumer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_invoiceTbl_ProductsTbl">
+    <End Role="ProductsTbl" Type="Self.ProductsTbl" Multiplicity="1" />
+    <End Role="invoiceTbl" Type="Self.invoiceTbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductsTbl">
+        <PropertyRef Name="pkID" />
+      </Principal>
+      <Dependent Role="invoiceTbl">
+        <PropertyRef Name="fkProduct" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductsTbl_categoryTbl">
+    <End Role="categoryTbl" Type="Self.categoryTbl" Multiplicity="1" />
+    <End Role="ProductsTbl" Type="Self.ProductsTbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categoryTbl">
+        <PropertyRef Name="pkID" />
+      </Principal>
+      <Dependent Role="ProductsTbl">
+        <PropertyRef Name="fkCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="onlineshopModelStoreContainer">
+    <EntitySet Name="categoryTbl" EntityType="Self.categoryTbl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CostumersTbl" EntityType="Self.CostumersTbl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="invoiceTbl" EntityType="Self.invoiceTbl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductsTbl" EntityType="Self.ProductsTbl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="invoiceView" EntityType="Self.invoiceView" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [invoiceView].[name] AS [name], 
+    [invoiceView].[img] AS [img], 
+    [invoiceView].[price] AS [price], 
+    [invoiceView].[pkID] AS [pkID], 
+    [invoiceView].[factorNumber] AS [factorNumber], 
+    [invoiceView].[fkProduct] AS [fkProduct], 
+    [invoiceView].[fkCostumer] AS [fkCostumer], 
+    [invoiceView].[status] AS [status], 
+    [invoiceView].[transID] AS [transID], 
+    [invoiceView].[trackingID] AS [trackingID], 
+    [invoiceView].[cardNumber] AS [cardNumber]
+    FROM [dbo].[invoiceView] AS [invoiceView]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_invoiceTbl_CostumersTbl" Association="Self.FK_invoiceTbl_CostumersTbl">
+      <End Role="CostumersTbl" EntitySet="CostumersTbl" />
+      <End Role="invoiceTbl" EntitySet="invoiceTbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_invoiceTbl_ProductsTbl" Association="Self.FK_invoiceTbl_ProductsTbl">
+      <End Role="ProductsTbl" EntitySet="ProductsTbl" />
+      <End Role="invoiceTbl" EntitySet="invoiceTbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductsTbl_categoryTbl" Association="Self.FK_ProductsTbl_categoryTbl">
+      <End Role="categoryTbl" EntitySet="categoryTbl" />
+      <End Role="ProductsTbl" EntitySet="ProductsTbl" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
