@@ -146,9 +146,6 @@ namespace hardworker.Controllers
             {
                 ViewBag.sc = "0";
             }
-            //ViewBag.success = 1;
-            //var a = 125;
-            //ViewBag.message = "fd123" + a;
             return View();
         }
 
